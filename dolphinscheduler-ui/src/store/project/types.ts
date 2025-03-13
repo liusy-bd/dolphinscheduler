@@ -39,6 +39,7 @@ type TaskType =
   | 'DATA_QUALITY'
   | 'SWITCH'
   | 'SEATUNNEL'
+  | 'SEATUNNEL_DEFINE'
   | 'EMR'
   | 'ZEPPELIN'
   | 'K8S'

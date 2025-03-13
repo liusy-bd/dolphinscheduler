@@ -229,6 +229,25 @@ export function formatParams(data: INodeData): {
     }
   }
 
+  if (data.taskType === 'SEATUNNEL_DEFINE') {
+    taskParams.startupScript = data.startupScript
+    taskParams.useCustom = data.useCustom
+    taskParams.rawScript = data.rawScript
+    if (data.startupScript?.includes('flink')) {
+      taskParams.runMode = data.runMode
+      taskParams.others = data.others
+    }
+    if (data.startupScript?.includes('spark')) {
+      taskParams.deployMode = data.deployMode
+      taskParams.master = data.master
+      taskParams.masterUrl = data.masterUrl
+    }
+    if (data.startupScript === 'seatunnel.sh') {
+      taskParams.deployMode = data.deployMode
+      taskParams.others = data.others
+    }
+  }
+
   if (data.taskType === 'SWITCH') {
     taskParams.switchResult = {}
     taskParams.switchResult.dependTaskList = data.dependTaskList

@@ -54,6 +54,7 @@ const NodeDetail = defineComponent({
       readonly,
       definition
     })
+    console.log(elementsRef,rulesRef,model, elementsRef.value ,"=======")
     watch(
       () => model.taskType,
       async (taskType) => {

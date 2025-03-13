@@ -84,6 +84,10 @@ export const TASK_TYPES_MAP = {
     alias: 'SeaTunnel',
     helperLinkDisable: true
   },
+  SEATUNNEL_DEFINE: {
+    alias: 'SeaTunnel_define',
+    helperLinkDisable: true
+  },
   EMR: {
     alias: 'AmazonEMR',
     helperLinkDisable: true

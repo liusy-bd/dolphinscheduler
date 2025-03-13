@@ -52,6 +52,7 @@ public class TaskPluginManager {
             log.warn("The task plugin has already been loaded");
             return;
         }
+
         PrioritySPIFactory<TaskChannelFactory> prioritySPIFactory = new PrioritySPIFactory<>(TaskChannelFactory.class);
         for (Map.Entry<String, TaskChannelFactory> entry : prioritySPIFactory.getSPIMap().entrySet()) {
             String factoryName = entry.getKey();

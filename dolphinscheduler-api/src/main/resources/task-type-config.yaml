@@ -42,6 +42,7 @@ task:
     - 'SWITCH'
     - 'DYNAMIC'
   dataIntegration:
+    - 'SEATUNNEL_DEFINE'
     - 'SEATUNNEL'
     - 'DATAX'
     - 'SQOOP'

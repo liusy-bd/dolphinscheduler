@@ -155,6 +155,7 @@ export function getDatasourceTablesById(
 export function getDatasourceTableColumnsById(
   datasourceId: number,
   database: string,
+
   tableName: string
 ): any {
   return axios({

@@ -153,6 +153,11 @@ export default defineComponent({
         image: `${import.meta.env.BASE_URL}images/task-icons/seatunnel.png`
       },
       {
+        taskType: 'SEATUNNEL_DEFINE',
+        color: '#8c8c8f',
+        image: `${import.meta.env.BASE_URL}images/task-icons/seatunnel_define.png`
+      },
+      {
         taskType: 'DINKY',
         color: '#d69f5b',
         image: `${import.meta.env.BASE_URL}images/task-icons/dinky.png`

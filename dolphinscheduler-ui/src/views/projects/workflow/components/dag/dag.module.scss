@@ -150,6 +150,9 @@ $bgLight: #ffffff;
     &.icon-seatunnel {
       background-image: url('/images/task-icons/seatunnel.png');
     }
+    &.icon-seatunnel_define {
+      background-image: url('/images/task-icons/seatunnel_define.png');
+    }
     &.icon-spark {
       background-image: url('/images/task-icons/spark.png');
     }
@@ -265,6 +268,9 @@ $bgLight: #ffffff;
       }
       &.icon-seatunnel {
         background-image: url('/images/task-icons/seatunnel_hover.png');
+      }
+      &.icon-seatunnel_define {
+        background-image: url('/images/task-icons/seatunnel_define_hover.png');
       }
       &.icon-spark {
         background-image: url('/images/task-icons/spark_hover.png');
