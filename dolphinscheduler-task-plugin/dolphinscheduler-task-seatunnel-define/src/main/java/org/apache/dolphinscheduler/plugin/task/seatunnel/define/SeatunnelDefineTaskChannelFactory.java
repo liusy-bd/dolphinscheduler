@@ -43,7 +43,7 @@ public class SeatunnelDefineTaskChannelFactory implements TaskChannelFactory {
 
     @Override
     public String getName() {
-        return "SEATUNNEL";
+        return "SEATUNNEL_DEFINE";
     }
 
     @Override
