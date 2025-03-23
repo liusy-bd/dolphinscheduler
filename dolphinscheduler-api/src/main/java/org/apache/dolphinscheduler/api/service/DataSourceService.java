@@ -24,6 +24,7 @@ import org.apache.dolphinscheduler.plugin.datasource.api.datasource.BaseDataSour
 import org.apache.dolphinscheduler.spi.datasource.ConnectionParam;
 import org.apache.dolphinscheduler.spi.enums.DbType;
 import org.apache.dolphinscheduler.spi.params.base.ParamsOptions;
+import org.apache.dolphinscheduler.spi.params.base.TableColumnInfo;
 
 import java.util.List;
 
@@ -146,6 +147,15 @@ public interface DataSourceService {
      * @return
      */
     List<ParamsOptions> getTableColumns(Integer datasourceId, String database, String tableName);
+
+    /**
+     * get table columns and types and descriptions
+     * @param datasourceId
+     * @param database
+     * @param tableName
+     * @return
+     */
+    List<TableColumnInfo> getTableColumnsInfo(Integer datasourceId, String database, String tableName);
 
     /**
      * get databases

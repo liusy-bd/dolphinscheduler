@@ -58,6 +58,7 @@ import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.dolphinscheduler.spi.params.base.TableColumnInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -504,6 +505,22 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
                 database = null;
             }
             rs = metaData.getColumns(database, null, tableName, "%");
+
+            while (rs.next()) {
+                // 获取字段名
+                String columnName = rs.getString("COLUMN_NAME");
+                // 获取字段类型
+                int columnType = rs.getInt("DATA_TYPE");
+                String columnTypeName = rs.getString("TYPE_NAME");
+                // 获取字段描述（注释），注意：不同数据库对字段描述的支持不同
+                String columnRemarks = rs.getString("REMARKS");
+
+                // 这里可以根据需要对获取到的信息进行处理，例如打印输出
+                System.out.println("Column Name: " + columnName);
+                System.out.println("Column Type: " + columnTypeName + " (" + columnType + ")");
+                System.out.println("Column Remarks: " + columnRemarks);
+            }
+
             if (rs == null) {
                 throw new ServiceException(Status.DATASOURCE_CONNECT_FAILED);
             }
@@ -521,6 +538,74 @@ public class DataSourceServiceImpl extends BaseServiceImpl implements DataSource
         List<ParamsOptions> options = getParamsOptions(columnList);
         return options;
     }
+
+    /**
+     * get table columns and types and descriptions
+     * @param datasourceId
+     * @param database
+     * @param tableName
+     * @return
+     */
+    @Override
+    public List<TableColumnInfo> getTableColumnsInfo(Integer datasourceId, String database, String tableName) {
+
+        DataSource dataSource = dataSourceMapper.selectById(datasourceId);
+        BaseConnectionParam connectionParam =
+                (BaseConnectionParam) DataSourceUtils.buildConnectionParams(
+                        dataSource.getType(),
+                        dataSource.getConnectionParams());
+
+        if (null == connectionParam) {
+            throw new ServiceException(Status.DATASOURCE_CONNECT_FAILED);
+        }
+
+        Connection connection =
+                DataSourceUtils.getConnection(dataSource.getType(), connectionParam);
+        List<TableColumnInfo> columnInfoList = new ArrayList<>();
+        ResultSet rs = null;
+
+        try {
+            if (null == connection) {
+                throw new ServiceException(Status.DATASOURCE_CONNECT_FAILED);
+            }
+
+            DatabaseMetaData metaData = connection.getMetaData();
+
+            if (dataSource.getType() == DbType.ORACLE) {
+                database = null;
+            }
+            rs = metaData.getColumns(database, null, tableName, "%");
+
+            while (rs.next()) {
+                // 获取字段名
+                String columnName = rs.getString("COLUMN_NAME");
+                // 获取字段类型
+                int columnType = rs.getInt("DATA_TYPE");
+                String columnTypeName = rs.getString("TYPE_NAME");
+                // 获取字段描述（注释），注意：不同数据库对字段描述的支持不同
+                String columnRemarks = rs.getString("REMARKS");
+
+                // 这里可以根据需要对获取到的信息进行处理，例如打印输出
+                System.out.println("Column Name: " + columnName);
+                System.out.println("Column Type: " + columnTypeName + " (" + columnType + ")");
+                System.out.println("Column Remarks: " + columnRemarks);
+
+                TableColumnInfo columnInfo = new TableColumnInfo();
+                columnInfo.setColumnName(columnName);
+                columnInfo.setColumnType(columnTypeName);
+                columnInfo.setColumnRemarks(columnRemarks);
+                columnInfoList.add(columnInfo);
+            }
+        } catch (Exception e) {
+            log.error("Get datasource table columns error, datasourceId:{}.", dataSource.getId(), e);
+            throw new ServiceException(Status.DATASOURCE_CONNECT_FAILED);
+        } finally {
+            closeResult(rs);
+            releaseConnection(connection);
+        }
+        return columnInfoList;
+    }
+
 
     @Override
     public List<ParamsOptions> getDatabases(Integer datasourceId) {

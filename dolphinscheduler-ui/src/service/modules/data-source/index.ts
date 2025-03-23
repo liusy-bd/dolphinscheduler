@@ -168,3 +168,20 @@ export function getDatasourceTableColumnsById(
     }
   })
 }
+
+export function getDatasourceTableColumnsInfoById(
+    datasourceId: number,
+    database: string,
+
+    tableName: string
+): any {
+  return axios({
+    url: '/datasources/tableColumnsInfo',
+    method: 'get',
+    params: {
+      datasourceId,
+      database,
+      tableName
+    }
+  })
+}

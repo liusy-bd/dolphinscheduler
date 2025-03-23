@@ -31,7 +31,7 @@ type IType =
   | 'multi-input'
   | 'custom'
   | 'multi-condition'
-
+  | 'table'
 interface IOption {
   [key: string]: any
 }
@@ -78,6 +78,8 @@ interface IJsonItemParams {
   class?: string
   path?: string
   rule?: IFormItemRule
+  data?: any[] | Ref<any[]>;
+  columns?: any[];
 }
 
 type IJsonItemFn = (i?: number) => IJsonItemParams

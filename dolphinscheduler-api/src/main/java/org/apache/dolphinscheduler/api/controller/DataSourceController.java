@@ -51,6 +51,7 @@ import org.apache.dolphinscheduler.spi.params.base.ParamsOptions;
 
 import java.util.List;
 
+import org.apache.dolphinscheduler.spi.params.base.TableColumnInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -366,6 +367,24 @@ public class DataSourceController extends BaseController {
         List<ParamsOptions> options = dataSourceService.getTableColumns(datasourceId, database, tableName);
         return Result.success(options);
     }
+
+
+    @Operation(summary = "tableColumnsTypesDescriptions", description = "GET_DATASOURCE_TABLE_COLUMNS_NOTES")
+    @Parameters({
+            @Parameter(name = "datasourceId", description = "DATA_SOURCE_ID", required = true, schema = @Schema(implementation = int.class, example = "1")),
+            @Parameter(name = "tableName", description = "TABLE_NAME", required = true, schema = @Schema(implementation = String.class, example = "test")),
+            @Parameter(name = "database", description = "DATABASE", required = true, schema = @Schema(implementation = String.class, example = "test"))
+    })
+    @GetMapping(value = "/tableColumnsInfo")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiException(GET_DATASOURCE_TABLE_COLUMNS_ERROR)
+    public Result<Object> getTableColumnsInfo(@RequestParam("datasourceId") Integer datasourceId,
+                                          @RequestParam("tableName") String tableName,
+                                          @RequestParam(value = "database") String database) {
+        List<TableColumnInfo> options = dataSourceService.getTableColumnsInfo(datasourceId, database, tableName);
+        return Result.success(options);
+    }
+
 
     @Operation(summary = "databases", description = "GET_DATASOURCE_DATABASE_NOTES")
     @Parameters({
